@@ -222,3 +222,99 @@ void screenFrame()
     Maze();//
 }
 //////////////////////////////////////////////// LEVEL 1 ///////////////////////////////////////////////////////////////////////////////////
+void levelNo1()
+{
+    // Variables for level 1
+    int timer = 0;       // Timer for enemy 3 random direction
+    int belletTimer = 0; // Timer for player's bullet removal
+
+    // Initial assignments for global variables
+    healtPassingKeyX = 51, healtPassingKeyY = 17, magazineX = 88, magazineY = 19;
+    rightPlayerBulletCount = 0, leftPlayerBulletCount = 0, playerBulletCount = 200, rightEnemyBulletCount = 0, leftEnemyBulletCount = 0;
+    maxPlayerHealth = 100, maxhealthEnemy1 = 100, maxhealthEnemy2 = 100, maxhealthEnemy3 = 100, score = 0, enemy3Timer = 0;
+    playerX = 10, playerY = 45, eX = 30, eY = 17, eX2 = 170, eY2 = 19, eX3 = 90, eY3 = 27, levelNumber = 1;
+    enemy1IsLive = true, enemy2IsLive = true, enemy3IsLive = true, playerIsLive = true;
+    LevelRunning = true;
+    // Set up the level interface
+    screenFrame();//
+    InnerMap();//
+    printEnemy1(eX, eY);
+    printEnemy2(eX2, eY2);
+    printEnemy3Right(eX3, eY3);
+    printLeftPlayer(playerX, playerY);
+    printLevel1(levelNumber);
+    startPlayerBullet();////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    startEnemyBullet();////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    // Main game loop for level 1
+    while (LevelRunning)
+    {
+        // Player's movement and actions
+        if (maxPlayerHealth > 0 && (enemy1IsLive == true || enemy2IsLive == true || enemy3IsLive == true))
+        {
+            movePlayer();
+        }
+        else if (enemy1IsLive == false && enemy2IsLive == false && enemy3IsLive == false)
+        {
+
+            LevelRunning = true;
+            endOfLevel("  CONGRATULATIONS! LEVEL PASSED ");
+        }
+        else
+        {
+            LevelRunning = false;
+            playerIsLive = false;
+            endOfLevel("             Game Over! ");
+            menu();
+        }
+
+        // Enemy 1 movements and actions
+        if (maxhealthEnemy1 > 0)
+        {
+            moveEnemy1();//
+        }
+        else
+        {
+            deathOfEnemy1(eX, eY);
+            enemy1IsLive = false;
+        }
+
+        // Enemy 2 movements and actions
+        if (maxhealthEnemy2 > 0)
+        {
+            moveEnemy2();
+        }
+        else
+        {
+            deathOfEnemy2(eX2, eY2);
+            enemy2IsLive = false;
+        }
+
+        // Enemy 3 movements and actions
+        if (maxhealthEnemy3 > 0)///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            if (timer == 5)
+            {
+                randomValue = rand() % 4;
+                timer = 0;
+            }
+            enemy3Direction();
+        }
+        else
+        {
+            deathOfEnemy3(eX3, eY3);
+            enemy3IsLive = false;
+        }
+
+        // Reset timers and handle bullet movements and collisions
+        if (enemy3Timer == 120)
+        {
+            enemy3Timer = 0;
+        }
+        if (belletTimer == 20)
+        {
+            resetPlayerBullets();
+            resetEnemyBullets();
+            belletTimer = 0;
+        }
+        // Display health and handle bullet movements
