@@ -94,3 +94,131 @@ void resetEnemyBullets();
 
 // Function to create an enemy bullet at coordinates (x, y) and specified direction
 void enemyBullet(int x, int y, string direction);
+
+// Function to display enemy bullets at coordinates (x, y)
+void printEnemyBullets(int x, int y);
+
+// Function to handle the movement of enemy bullets
+void moveEnemyBullet();
+
+// Function to handle collisions with enemy bullets
+void enemyBulletCollision();
+
+// Player functionalities
+void printRightPlayer(int x, int y); // Display the player facing right
+void printLeftPlayer(int x, int y);  // Display the player facing left
+void movePlayer();                 // Handle player movement
+void playerDirection();                // Handle player direction change
+void erasePlayer(int x, int y);        // Erase the player
+
+// Player bullet functionalities
+void startPlayerBullet();                        // Initialize player bullets
+void removePlayerBulletsFromArray(int c, string direction); // Remove player bullets
+void resetPlayerBullets();                         // Reset player bullets
+void playerBulletCollision();                      // Handle bullet collision
+void movePlayerBullet();                      // Handle bullet movement
+void bullet(int x, int y);                         // Create a bullet
+void erasePlayerBullet(int x, int y);              // Erase a bullet
+
+// On-screen navigators
+void gotoxy(int x, int y);                  // Move the cursor to (x, y) position
+char getCharAtxy(short int x, short int y); // Get the character at (x, y) position
+
+// Basic game functions
+void increaseScore();                                   // Add score
+void playerCollisionWithMagazine(int x, int y);              // Handle magazine collision (if touched, bullets increase)
+void playerCollisionWithHealthPill(int x, int y);                  // Handle pill collision (if touched, health increases)
+void checkItems(int x, int y);                     // Check collected items (health)
+void playerHealth(int x, int y);                   // Display player health
+void playerHealthDamage(int damage, int x, int y); // Inflict damage to player
+void printScore();                               // Display the current score
+void printRemainingBullets();                         // Display the remaining bullet count
+void eraser(int x, int y);                         // Erase at (x, y) position
+
+// Functions for InnerMaps
+void Maze(); // Draw the game Maze
+void displayItems();  // Display the top bar
+void InnerMap();      // Display the InnerMap
+void innerMap2();
+void InnerMapBoxes(int x, int y, int size);                      // Display InnerMapBoxes
+void verticalInnerMapBoxes(int x, int y, int width, int height); // Display vertical InnerMapBoxes
+void placeObjects();                                        // Initialize game objects
+void rowsOfMaze(int x, int y);                               // Draw outer rows
+void columnsOfMaze(int x, int y);                               // Draw inner rows
+void healthPill(int x, int y);                              // Display the health pill
+void magazine(int x, int y);                                // Display the magazine
+void displayHealthPill();                                   // Display health pill status
+
+// End Key Functions
+void printPassingKey(int x, int y);
+void erasePassingKey(int x, int y);
+void touchPassingKey(int x, int y);
+
+// Levels
+void printLevel1(int x);
+void levelNo1(); // Level 1 gameplay logic
+void levelNo2(); // Level 2 gameplay logic
+
+// Coordinates of characters
+int playerX, playerY, eX, eY, eX2, eY2, eX3, eY3;
+
+// Timer for enemy 3 movement
+int enemy3Timer;
+
+// Random values for enemy movements
+int randomValue;
+
+// Counts for various types of bullets that the enemy or player has fired
+int rightPlayerBulletCount, leftPlayerBulletCount, playerBulletCount, rightEnemyBulletCount, leftEnemyBulletCount;
+
+// Health variables for characters
+int maxPlayerHealth, maxhealthEnemy1, maxhealthEnemy2, maxhealthEnemy3;
+
+// Game score
+int score;
+
+// Coordinates for items on the InnerMap
+int healtPassingKeyX, healtPassingKeyY, magazineX, magazineY, levelNumber;
+
+// End Key
+int PassingKeyX, PassingKeyY;
+
+// ASCII characters used for display
+char box = 177;
+char heart = static_cast<char>(3); // Replaced with heart character
+char Diamond = static_cast<char>(4); // Replaced with diamond character
+char Magazine = static_cast<char>(178);
+char PassingKey = static_cast<char>(172);
+
+// Direction tracking for characters
+string playerdirection = "right", enemy1direction = "down", enemy2direction = "down", enemy3direction = "right";
+
+// Player's name
+string playername1 = "Player";
+
+// Level state tracking
+bool LevelRunning;
+bool enemy1IsLive, enemy2IsLive, enemy3IsLive, playerIsLive;
+
+// Arrays for player and enemy bullets' coordinates
+int playerRightBulletX[1000] = {-1}, playerRightBulletY[1000] = {-1},
+ playerLeftBulletX[1000] = {-1}, playerLeftBulletY[1000] = {-1};
+bool activatePlayerRightBullet[1000], activatePlayerLeftBullet[1000];
+int enemyRightBulletX[10000], enemyRightBulletY[10000], enemyLeftBulletX[10000],
+enemyLeftBulletY[10000];
+bool activateEnemyRightBullet[10000], activateEnemyLeftBullet[10000];
+
+int main()
+{
+    menu();
+}
+
+void screenFrame()
+{
+    // Set up screen for the level
+    playername1 = "Player";
+    system("cls");
+    displayItems();
+    Maze();//
+}
+//////////////////////////////////////////////// LEVEL 1 ///////////////////////////////////////////////////////////////////////////////////
