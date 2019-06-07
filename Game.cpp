@@ -382,3 +382,99 @@ void levelNo2()
 
         // Enemy 1 movements and actions
         if (maxhealthEnemy1 > 0)
+        {
+            moveEnemy1();
+        }
+        else
+        {
+            deathOfEnemy1(eX, eY);
+            enemy1IsLive = false;
+        }
+
+        // Enemy 2 movements and actions
+        if (maxhealthEnemy2 > 0)
+        {
+            moveEnemy2();
+        }
+        else
+        {
+            deathOfEnemy2(eX2, eY2);
+            enemy2IsLive = false;
+        }
+
+        // Enemy 3 movements and actions
+        if (maxhealthEnemy3 > 0)////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            if (timer == 5)
+            {
+                randomValue = rand() % 4;
+                timer = 0;
+            }
+            enemy3Direction();
+        }
+        else
+        {
+            deathOfEnemy3(eX3, eY3);
+            enemy3IsLive = false;
+        }
+
+        // Reset timers and handle bullet movements and collisions
+        if (enemy3Timer == 120)
+        {
+            enemy3Timer = 0;
+        }
+        if (belletTimer == 20)//
+        {
+            resetPlayerBullets();
+            resetEnemyBullets();
+            belletTimer = 0;
+        }
+        // Display health and handle bullet movements
+        gotoxy(1, 0);
+        playerHealth(165, 4);
+        healthEnemy1(165, 6);
+        healthEnemy2(165, 7);
+        healthEnemy3(165, 8);
+        movePlayerBullet();
+        playerBulletCollision();
+        moveEnemyBullet();
+        enemyBulletCollision();
+        timer++;
+        enemy3Timer++;
+        belletTimer++;
+        Sleep(50);
+    }
+    LevelRunning = false;
+}
+
+void movePlayer() // movement functionalities of player
+{
+    if (GetAsyncKeyState(VK_RIGHT))
+    {
+        checkItems(playerX + 3, playerY);
+        if (getCharAtxy(playerX + 3, playerY) == ' ' && getCharAtxy(playerX + 3, playerY + 1) == ' ' && getCharAtxy(playerX + 3, playerY + 2) == ' ')
+        {
+            erasePlayer(playerX, playerY);
+            playerX++;
+            playerdirection = "right";
+            printRightPlayer(playerX, playerY);
+        }
+    }
+    else if (GetAsyncKeyState(VK_LEFT))
+    {
+        checkItems(playerX - 1, playerY);
+        if (getCharAtxy(playerX - 1, playerY) == ' ' && getCharAtxy(playerX - 1, playerY + 1) == ' ' && getCharAtxy(playerX - 1, playerY + 2) == ' ')
+        {
+            erasePlayer(playerX, playerY);
+            playerX--;
+            playerdirection = "left";
+            printLeftPlayer(playerX, playerY);
+        } 
+    }
+    else if (GetAsyncKeyState(VK_UP))
+    {
+        checkItems(playerX, playerY - 1);
+        if (getCharAtxy(playerX, playerY - 1) == ' ' && getCharAtxy(playerX + 1, playerY - 1) == ' ' && getCharAtxy(playerX + 2, playerY - 1) == ' ')
+        {
+            erasePlayer(playerX, playerY);
+            playerY--;
