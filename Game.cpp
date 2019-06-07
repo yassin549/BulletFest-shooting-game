@@ -318,3 +318,67 @@ void levelNo1()
             belletTimer = 0;
         }
         // Display health and handle bullet movements
+        gotoxy(1, 0);
+        playerHealth(165, 4);
+        healthEnemy1(165, 6);
+        healthEnemy2(165, 7);
+        healthEnemy3(165, 8);
+        movePlayerBullet();
+        playerBulletCollision();
+        moveEnemyBullet();
+        enemyBulletCollision();
+        timer++;
+        enemy3Timer++;
+        belletTimer++;
+        Sleep(50);
+    }
+    LevelRunning = false;
+}
+
+void levelNo2()
+{
+    // Variables for level 2
+    int timer = 0;       // Timer for enemy 3 random direction
+    int belletTimer = 0; // Timer for player's bullet removal
+
+    // Initial assignments for global variables
+    healtPassingKeyX = 49, healtPassingKeyY = 17, magazineX = 154, magazineY = 23, levelNumber = 2;
+    rightPlayerBulletCount = 0, leftPlayerBulletCount = 0, playerBulletCount = 150,//Number of total bullets
+    rightEnemyBulletCount = 0, leftEnemyBulletCount = 0,score = 0, enemy3Timer = 0;
+    maxPlayerHealth = 100, maxhealthEnemy1 = 100, maxhealthEnemy2 = 100, maxhealthEnemy3 = 100;//Total Healths Of Characters
+    playerX = 10, playerY = 45, eX = 30, eY = 17, eX2 = 170, eY2 = 19, eX3 = 90, eY3 = 27, PassingKeyX = 165, PassingKeyY = 12;// initiall printing coordinates
+    enemy1IsLive = true, enemy2IsLive = true, enemy3IsLive = true, playerIsLive = true, LevelRunning = true;
+
+    // Set up the level interface
+    screenFrame();
+    innerMap2();
+    printEnemy1(eX, eY);
+    printEnemy2(eX2, eY2);
+    printEnemy3Right(eX3, eY3);
+    printLeftPlayer(playerX, playerY);
+    printLevel1(levelNumber);
+    startPlayerBullet();
+    startEnemyBullet();
+
+    // Main game loop for level 2
+    while (LevelRunning)
+    {
+        // Player's movement and actions
+        if (maxPlayerHealth > 0)
+        {
+            if (enemy1IsLive == false && enemy2IsLive == false && enemy3IsLive == false)
+            {
+                printPassingKey(PassingKeyX,PassingKeyY);
+            }
+            movePlayer();
+        }
+        else if (maxPlayerHealth == 0 )
+        {
+            LevelRunning = false;
+            playerIsLive = false;
+            endOfLevel("         Game Over! ");
+            break;
+        }
+
+        // Enemy 1 movements and actions
+        if (maxhealthEnemy1 > 0)
