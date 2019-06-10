@@ -478,3 +478,99 @@ void movePlayer() // movement functionalities of player
         {
             erasePlayer(playerX, playerY);
             playerY--;
+            playerDirection();
+        }
+    }
+    else if (GetAsyncKeyState(VK_DOWN))
+    {
+        checkItems(playerX, playerY + 3);
+        if (getCharAtxy(playerX, playerY + 3) == ' ' && getCharAtxy(playerX + 1, playerY + 3) == ' ' && getCharAtxy(playerX + 2, playerY + 3) == ' ')
+        {
+            erasePlayer(playerX, playerY);
+            playerY++;
+            playerDirection();
+        }
+    }
+    if (GetAsyncKeyState(VK_SPACE))
+    {
+        if (playerBulletCount > 0 && (getCharAtxy(playerX, playerY) == ' ' && getCharAtxy(playerX - 1, playerY + 1) == ' ' && getCharAtxy(playerX + 3, playerY + 1) == ' '))
+        {
+            bullet(playerX, playerY);// fire a bullet
+            playerBulletCount--;// decrease the player's bullet count
+            printRemainingBullets();// update display total bullrts on the top of screen
+        }
+    }
+    if (GetAsyncKeyState(VK_ESCAPE))
+    {
+        Sleep(500);
+        menu();
+    }
+}
+
+void playerDirection()
+{
+    // Determines direction of player and calls the respective side face function
+    if (playerdirection == "right")
+    {
+        printRightPlayer(playerX, playerY);
+    }
+    else if (playerdirection == "left")
+    {
+        printLeftPlayer(playerX, playerY);
+    }
+}
+
+void printRightPlayer(int x, int y)
+{
+    // Prints player facing right side of the console
+    string body[3][3] = {{" ", "0", " "}, {"(", "=", ">"}, {"/", "/", " "}};
+    print3by3Grid(body, 3, "\33[32m", x, y);
+}
+
+void printLeftPlayer(int x, int y)
+{
+    // Prints player facing left side of the console
+    string body[3][3] = {{" ", "0", " "}, {"<", "=", ")"}, {" ", "\\", "\\"}};
+    print3by3Grid(body, 3, "\33[32m", x, y);
+}
+
+void erasePlayer(int x, int y)
+{
+    // Erases player sprite from console
+    string body[3][3] = {{" ", " ", " "}, {" ", " ", " "}, {" ", " ", " "}};
+    print3by3Grid(body, 3, "\33[36m", x, y);
+}    
+
+void print3by3Grid(string arr[][3], int size, string color, int x, int y)
+{
+    // Prints characters in a 3x3 grid
+    int bx;
+    for (int i = 0; i < size; i++)
+    {
+        bx = x;
+        for (int j = 0; j < 3; j++)
+        {
+            gotoxy(bx, y);
+            cout << color << arr[i][j] << "\33[0m";
+            bx++;//Increments the x-coordinate for the next character in the same row.
+        }
+        y++;//y-coordinate is incremented to move to the next row.
+    }
+}
+
+void print4by4Grid(string arr[][4], int size, string color, int x, int y)
+{
+    // Prints characters in a 3x4 grid
+    int bx;
+    for (int i = 0; i < size; i++)
+    {
+        bx = x;
+        for (int j = 0; j < 4; j++)
+        {
+            gotoxy(bx, y);
+            cout << color << arr[i][j] << "\33[0m";
+            bx++;
+        }
+        y++;
+    }
+}
