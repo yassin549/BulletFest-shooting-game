@@ -574,3 +574,96 @@ void print4by4Grid(string arr[][4], int size, string color, int x, int y)
         y++;
     }
 }
+
+void print5by5Grid(string arr[][5], int size, string color, int x, int y)
+{
+    // Prints characters in a 3x5 grid
+    int bx;
+    for (int i = 0; i < size; i++)//rows
+    {
+        bx = x;
+        for (int j = 0; j < 5; j++)//columns
+        {
+            gotoxy(bx, y);
+            cout << color << arr[i][j] << "\33[0m";
+            bx++;
+        }
+        y++;
+    }
+}
+
+void printEnemy1(int x, int y) // printing enemy 1
+{
+    string body[4][4] = {{"(", "O", " ", " "}, {"\\", "=", "=", ">"}, {" ", "^", "'", " "}, {"/", " ", "|", " "}};
+    print4by4Grid(body, 4, "\33[34m", x, y);
+}
+
+void eraseEnemy1(int x, int y) // erase enemy 1
+{
+    string body[4][4] = {{" ", " ", " ", " "}, {" ", " ", " ", " "}, {" ", " ", " ", " "}, {" ", " ", " ", " "}};
+    print4by4Grid(body, 4, "\33[34m", x, y);
+}
+
+void deathOfEnemy1(int x, int y) // enemy 1 death
+{
+    string body[4][4] = {{"X", "X", "X", "X"}, {"X", "X", "X", "X"}, {"X", "X", "X", "X"}, {"X", "X", "X", "X"}};
+    print4by4Grid(body, 4, "\33[34m", x, y);
+}
+void moveEnemy1() // movement functionality of enemy 1
+{
+    if (enemy1direction == "down") // To change enemy direction 
+    {
+        if (eY == 22)
+        {
+            enemy1direction = "up";
+        }
+        else if (eY == playerY)// fire iff player x and enemy x matches
+        {
+            enemyBullet(eX + 4, eY + 1, "right");
+        }
+        else
+        {
+            // simple enemy movent logiccs
+            if (getCharAtxy(eX, eY + 5) == ' ' && getCharAtxy(eX + 2, eY + 5) == ' ' && getCharAtxy(eX + 3, eY + 5) == ' ' && getCharAtxy(eX + 4, eY + 5) == ' ')//?
+            {
+                eraseEnemy1(eX, eY);
+                eY++;
+                printEnemy1(eX, eY);
+            }
+        }
+    }
+
+    else if (enemy1direction == "up")
+    {
+        if (eY == 12)
+        {
+            enemy1direction = "down";
+        }
+        else if (eY == playerY)
+        {
+            enemyBullet(eX + 4, eY + 1, "right");
+        }
+        else
+        {
+            if (getCharAtxy(eX, eY - 1) == ' ' && getCharAtxy(eX + 2, eY - 1) == ' ' && getCharAtxy(eX + 3, eY - 1) == ' ' && getCharAtxy(eX + 4, eY - 1))
+            {
+                eraseEnemy1(eX, eY);
+                eY--;
+                printEnemy1(eX, eY);
+            }
+        }
+    }
+}
+
+void printEnemy2(int x, int y) // printing enemy 2
+{
+    string body[3][5] = {{" ", "_", "_", "_", " "},
+        {"<", "=", "@", "|", ")"},
+        {" ", "O", "/", "\\", "O"}};
+    print5by5Grid(body, 3, "\33[35m", x, y);
+}
+
+void eraseEnemy2(int x, int y) // erasing enemy 2
+{
+    string body[3][5] = {{" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}};
+    print5by5Grid(body, 3, "\33[35m", x, y);
