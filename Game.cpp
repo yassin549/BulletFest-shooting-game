@@ -667,3 +667,99 @@ void eraseEnemy2(int x, int y) // erasing enemy 2
 {
     string body[3][5] = {{" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}};
     print5by5Grid(body, 3, "\33[35m", x, y);
+}
+void deathOfEnemy2(int x, int y) //// enemy 2 death
+
+{
+    string body[3][5] = {{"X", "X", "X", "X", "X"}, {"X", "X", "X", "X", "X"}, {"X", "X", "X", "X", "X"}};
+    print5by5Grid(body, 3, "\33[35m", x, y);
+}
+void moveEnemy2() // movement functionality of enemy 2
+{
+    if (enemy2direction == "down")
+    {
+        if (eY2 == 47)
+        {
+            enemy2direction = "up";
+        }
+        else if (eY2 == playerY)
+        {
+            enemyBullet(eX2, eY2, "left");
+        }
+        else
+        {
+            if (getCharAtxy(eX2, eY2 + 4) == ' ' && getCharAtxy(eX2 + 2, eY2 + 4) == ' ' && getCharAtxy(eX2 + 4, eY2 + 4) == ' ')
+            {
+                eraseEnemy2(eX2, eY2);
+                eY2++;
+                printEnemy2(eX2, eY2);
+            }
+        }
+    }
+    else if (enemy2direction == "up")
+    {
+        if (eY2 == 19)
+        {
+            enemy2direction = "down";
+        }
+        else if (eY2 == playerY)
+        {
+            enemyBullet(eX2, eY2, "left");
+        }
+        else
+        {
+            if (getCharAtxy(eX2, eY2 - 1) == ' ' && getCharAtxy(eX2 + 3, eY2 - 1) == ' ' && getCharAtxy(eX2 + 4, eY2 - 1))
+            {
+                eraseEnemy2(eX2, eY2);
+                eY2--;
+                printEnemy2(eX2, eY2);
+            }
+        }
+    }
+}
+
+void printEnemy3Right(int x, int y) // printing enemy 3 right face
+{
+    string body[3][5] = 
+    {
+        {" ", " ", "^", " ", " "},
+        {"<", "=", "=", "=", ">"},
+        {" ", " ", ",", " ", " "}
+    };
+    print5by5Grid(body, 3, "\33[31m", x, y);
+}
+
+void printEnemy3Left(int x, int y) // printing enemy 3 left face
+{
+    string body[3][5] = 
+    {
+        {" ", " ", "^", " ", " "},
+        {"<", "=", "=", "=", ">"},
+        {" ", " ", "'", " ", " "}
+    };
+    print5by5Grid(body, 3, "\33[31m", x, y);
+}
+
+void eraseEnemy3(int x, int y) // erase enemy 3
+{
+    string body[3][5] = {{" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}, {" ", " ", " ", " ", " "}};
+    print5by5Grid(body, 3, "\33[31m", x, y);
+}
+
+void deathOfEnemy3(int x, int y) // enemy 3 death
+{
+    string body[3][5] = {{"X", "X", "X", "X", "X"}, {"X", "X", "X", "X", "X"}, {"X", "X", "X", "X", "X"}};
+    print5by5Grid(body, 3, "\33[31m", x, y);
+}
+
+void enemy3Direction() // control direction of enemy 3
+{
+    // for shooting player if their y coordinates match
+    if ((eY3 == playerY || eY3 == playerY - 1 || eY3 == playerY - 2 || eY3 == playerY + 3 || eY3 == playerY + 1 || eY3 == playerY + 2) && enemy3Timer <= 60)
+    {
+        if (eX3 > playerX)
+        {
+            printEnemy3Left(eX3, eY3);
+            enemyBullet(eX3 - 1, eY3, "left");
+        }
+        else if (eX3 < playerX)
