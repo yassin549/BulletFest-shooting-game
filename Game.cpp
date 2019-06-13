@@ -763,3 +763,99 @@ void enemy3Direction() // control direction of enemy 3
             enemyBullet(eX3 - 1, eY3, "left");
         }
         else if (eX3 < playerX)
+        {
+            printEnemy3Right(eX3, eY3);
+            enemyBullet(eX3 + 5, eY3 + 1, "right");
+        }
+        if (enemy3Timer == 60)
+        {
+            enemy3Timer = 100;
+        }
+    }
+
+    // for random movement of enemy 3 in case it is not shooting player
+    else
+    {
+        if (randomValue == 0)
+        {
+            enemy3direction = "left";
+        }
+        else if (randomValue == 1)
+        {
+            enemy3direction = "right";
+        }
+        else if (randomValue == 2)
+        {
+            enemy3direction = "up";
+        }
+        else if (randomValue == 3)
+        {
+            enemy3direction = "down";
+        }
+        moveEnemy3();
+    }
+}
+
+void moveEnemy3() // moves enemy 3
+{
+    if (enemy3direction == "right")
+    {
+        if (getCharAtxy(eX3 + 5, eY3) == ' ' && getCharAtxy(eX3 + 5, eY3 + 1) == ' ' && getCharAtxy(eX3 + 5, eY3 + 2) == ' ')
+        {
+            eraseEnemy3(eX3, eY3);
+            eX3++;
+            printEnemy3Right(eX3, eY3);
+        }
+        else
+        {
+            enemy3direction = "left";
+        }
+    }
+    else if (enemy3direction == "left")
+    {
+        if (getCharAtxy(eX3 - 1, eY3) == ' ' && getCharAtxy(eX3 - 1, eY3 + 1) == ' ' && getCharAtxy(eX3 - 1, eY3 + 2) == ' ')
+        {
+            eraseEnemy3(eX3, eY3);
+            eX3--;
+            printEnemy3Left(eX3, eY3);
+        }
+        else
+        {
+            enemy3direction = "right";
+        }
+    }
+    else if (enemy3direction == "up")
+    {
+        if (getCharAtxy(eX3, eY3 - 1) == ' ' && getCharAtxy(eX3 + 2, eY3 - 1) == ' ' && getCharAtxy(eX3 + 3, eY3 - 1) == ' ')
+        {
+            eraseEnemy3(eX3, eY3);
+            eY3--;
+            printEnemy3Left(eX3, eY3);
+        }
+        else
+        {
+            enemy3direction = "down";
+        }
+    }
+    else if (enemy3direction == "down")
+    {
+        if (getCharAtxy(eX3, eY3 + 3) == ' ' && getCharAtxy(eX3 + 2, eY3 + 3) == ' ' && getCharAtxy(eX3 + 3, eY3 + 3) == ' ' && getCharAtxy(eX3 + 4, eY3 + 3) == ' ')
+        {
+            eraseEnemy3(eX3, eY3);
+            eY3++;
+            printEnemy3Left(eX3, eY3);
+        }
+        else
+        {
+            enemy3direction = "up";
+        }
+    }
+}
+
+void printEnemyBullets(int x, int y) // prints enemy bullets
+{
+    gotoxy(x, y);
+    cout << "\33[31m"
+         << "*"
+         << "\33[0m";
+}
