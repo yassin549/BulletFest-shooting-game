@@ -859,3 +859,99 @@ void printEnemyBullets(int x, int y) // prints enemy bullets
          << "*"
          << "\33[0m";
 }
+
+void startEnemyBullet() // start enemy bullets
+{
+    for (int i = 0; i < 10000; i++)
+    {
+        activateEnemyRightBullet[i] = false;
+        activateEnemyLeftBullet[i] = false;
+    }
+}
+
+void enemyBullet(int x, int y, string direction) // generates an enemy bullet and add indeX in the array also activate the bullet
+{
+    // generating right side bullets of enemies
+    if (direction == "right")
+    {
+        enemyRightBulletX[rightEnemyBulletCount] = x;
+        enemyRightBulletY[rightEnemyBulletCount] = y;
+        activateEnemyRightBullet[rightEnemyBulletCount] = true;
+        rightEnemyBulletCount++;
+        printEnemyBullets(x, y);//
+    }
+
+    // generating left side bullets of enemies
+    else if (direction == "left")
+    {
+        enemyLeftBulletX[leftEnemyBulletCount] = x - 1;
+        enemyLeftBulletY[leftEnemyBulletCount] = y + 1;
+        activateEnemyLeftBullet[leftEnemyBulletCount] = true;
+        leftEnemyBulletCount++;
+        printEnemyBullets(x - 1, y + 1);
+    }
+}
+
+void moveEnemyBullet() // move bullets of enemies
+{
+    // for right hand side bullet
+    for (int i = 0; i < rightEnemyBulletCount; i++)
+    {
+        if (activateEnemyRightBullet[i])
+        {
+            erasePlayerBullet(enemyRightBulletX[i], enemyRightBulletY[i]);
+            enemyRightBulletX[i] += 1;
+            printEnemyBullets(enemyRightBulletX[i], enemyRightBulletY[i]);
+        }
+    }
+
+    // for left hand side bullet
+    for (int i = 0; i < leftEnemyBulletCount; i++)
+    {
+        if (activateEnemyLeftBullet[i])
+        {
+            erasePlayerBullet(enemyLeftBulletX[i], enemyLeftBulletY[i]);
+            enemyLeftBulletX[i] -= 1;
+            printEnemyBullets(enemyLeftBulletX[i], enemyLeftBulletY[i]);
+        }
+    }
+}
+
+void enemyBulletCollision() // enemy bullet collsion detection
+{
+    // for right hand side bullet
+    for (int i = 0; i < rightEnemyBulletCount; i++)//
+    {
+        if (activateEnemyRightBullet[i])// Check if the right bullet is active
+        {
+            int x = enemyRightBulletX[i], y = enemyRightBulletY[i];
+            char next = getCharAtxy(x + 1, y);
+            if ((x + 1 == playerX + 1 && y == playerY) || (x + 1 == playerX && y == playerY + 1) || (x + 1 == playerX + 2 && y == playerY + 1) || (x + 1 == playerX && y == playerY + 2) || (x + 1 == playerX + 1 && y == playerY + 2) || (x + 1 == playerX + 2 && y == playerY + 2))
+            {
+                erasePlayerBullet(x, y);
+                if (i)
+                {
+                    playerHealthDamage(2, 165, 4);
+                }
+                removeEnemyBulletsFromArray(i, "right");
+            }
+            else if (next != ' ')
+            {
+                erasePlayerBullet(x, y);
+                removeEnemyBulletsFromArray(i, "right");
+            }
+        }
+    }
+
+    // for left hand side bullet
+    for (int i = 0; i < leftEnemyBulletCount; i++)
+    {
+        if (activateEnemyLeftBullet[i])
+        {
+            int x = enemyLeftBulletX[i], y = enemyLeftBulletY[i];
+            char next = getCharAtxy(x - 1, y);
+            if ((x - 1 == playerX + 1 && y == playerY) || (x - 1 == playerX && y == playerY + 1) || (x - 1 == playerX + 2 && y == playerY + 1) || (x - 1 == playerX && y == playerY + 2) || (x - 1 == playerX + 1 && y == playerY + 2) || (x - 1 == playerX + 2 && y == playerY + 2))
+            {
+                erasePlayerBullet(x, y);
+                if (maxPlayerHealth)
+                {
