@@ -955,3 +955,99 @@ void enemyBulletCollision() // enemy bullet collsion detection
                 erasePlayerBullet(x, y);
                 if (maxPlayerHealth)
                 {
+                    playerHealthDamage(2,165, 4);
+                }
+                removeEnemyBulletsFromArray(i, "left");
+            }
+            else if (next != ' ')
+            {
+                erasePlayerBullet(x, y);
+                removeEnemyBulletsFromArray(i, "left");
+            }
+        }
+    }
+}
+
+void removeEnemyBulletsFromArray(int c, string direction) // removes enemy bullet from the arrays
+{
+    // for right hand side bullet
+    if (direction == "right")
+    {
+        activateEnemyRightBullet[c] = false;
+    }
+
+    // for left hand side bullet
+    else if (direction == "left")
+    {
+        activateEnemyLeftBullet[c] = false;
+    }
+}
+
+void resetEnemyBullets()
+{
+    // for right bullets
+    for (int i = 0; i < rightEnemyBulletCount; i++)
+    {
+        if (!activateEnemyRightBullet[i])
+        {
+            for (int j = i; j < rightEnemyBulletCount - 1; j++)
+            {
+                enemyRightBulletX[j] = enemyRightBulletX[j + 1];
+                enemyRightBulletY[j] = enemyRightBulletY[j + 1];
+                activateEnemyRightBullet[j] = activateEnemyRightBullet[j + 1];
+            }
+            rightEnemyBulletCount--;
+        }
+    }
+
+    // for left bullets
+    for (int i = 0; i < leftEnemyBulletCount; i++)
+    {
+        if (!activateEnemyLeftBullet[i])
+        {
+            for (int j = i; j < leftEnemyBulletCount - 1; j++)
+            {
+                enemyLeftBulletX[j] = enemyLeftBulletX[j + 1];
+                enemyLeftBulletY[j] = enemyLeftBulletY[j + 1];
+                activateEnemyLeftBullet[j] = activateEnemyLeftBullet[j + 1];
+            }
+            leftEnemyBulletCount--;
+        }
+    }
+}
+
+void erasePlayerBullet(int x, int y) // erases the bullet
+{
+    gotoxy(x, y);
+    cout << " ";
+}
+
+void printbullet(int x, int y) // prints the bullet
+{
+    gotoxy(x, y);
+    cout << "\33[32m"
+         << "."
+         << "\33[0m";
+}
+
+void bullet(int x, int y) // generates a player bullet and adds bullet indeX in the array
+{
+    // generating right hand side bullet
+    if (playerdirection == "right")
+    {
+        playerRightBulletX[rightPlayerBulletCount] = x + 3;
+        playerRightBulletY[rightPlayerBulletCount] = y + 1;
+        activatePlayerRightBullet[rightPlayerBulletCount] = true;// to fore a bullet
+        rightPlayerBulletCount++;
+        printbullet(x + 3, y + 1);
+    }
+
+    // generating left hand side bullet
+    else if (playerdirection == "left")
+    {
+        playerLeftBulletX[leftPlayerBulletCount] = x - 1;
+        playerLeftBulletY[leftPlayerBulletCount] = y + 1;
+        activatePlayerLeftBullet[leftPlayerBulletCount] = true;
+        leftPlayerBulletCount++;
+        printbullet(x - 1, y + 1);
+    }
