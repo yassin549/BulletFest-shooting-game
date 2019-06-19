@@ -1051,3 +1051,99 @@ void bullet(int x, int y) // generates a player bullet and adds bullet indeX in 
         leftPlayerBulletCount++;
         printbullet(x - 1, y + 1);
     }
+}
+
+void movePlayerBullet() // moves all the bullets of player
+{
+    // for right hand side bullet
+    for (int i = 0; i < rightPlayerBulletCount; i++)
+    {
+        if (activatePlayerRightBullet[i])
+        {
+            erasePlayerBullet(playerRightBulletX[i], playerRightBulletY[i]);
+            playerRightBulletX[i] += 1;
+            printbullet(playerRightBulletX[i], playerRightBulletY[i]);
+        }
+    }
+
+    // for left hand side bullet
+    for (int i = 0; i < leftPlayerBulletCount; i++)
+    {
+        if (activatePlayerLeftBullet[i])
+        {
+            erasePlayerBullet(playerLeftBulletX[i], playerLeftBulletY[i]);
+            playerLeftBulletX[i] -= 1;
+            printbullet(playerLeftBulletX[i], playerLeftBulletY[i]);
+        }
+    }
+}
+
+void playerBulletCollision() // Remove the bullet in case of collision with the enemy
+{
+    // for right hand side bullet
+    for (int i = 0; i < rightPlayerBulletCount; i++)
+    {
+        if (activatePlayerRightBullet[i])
+        {
+            int x = playerRightBulletX[i], y = playerRightBulletY[i];
+            char next = getCharAtxy(x + 1, y);
+            if ((x + 1 == eX && y == eY) || (x + 1 == eX + 1 && y == eY) || (x + 1 == eX && y == eY + 1) || (x + 1 == eX + 4 && y == eY + 1) || (x + 1 == eX + 1 && y == eY + 2) || (x + 1 == eX + 2 && y == eY + 2) || (x + 1 == eX && y == eY + 3) || (x + 1 == eX + 1 && y == eY + 3) || (x + 1 == eX + 2 && y == eY + 3))
+            {
+                erasePlayerBullet(x, y);
+                if (enemy1IsLive)
+                {
+                    increaseScore();
+                    healthEnemy1Damage(5);
+                }
+                removePlayerBulletsFromArray(i, "right");
+            }
+            else if ((x + 1 == eX2 && y == eY2) || (x + 1 == eX2 && y == eY2 + 1) || (x + 1 == eX2 && y == eY2 + 2) || (x + 1 == eX2 && y == eY2 + 3) || (x + 1 == eX2 + 2 && y == eY2) || (x + 1 == eX2 + 2 && y == eY2 + 1) || (x + 1 == eX2 + 2 && y == eY2 + 2) || (x + 1 == eX2 + 2 && y == eY2 + 3) || (x + 1 == eX2 + 1 && y == eY2) || (x + 1 == eX2 + 1 && y == eY2 + 1) || (x + 1 == eX2 + 1 && y == eY2 + 2) || (x + 1 == eX2 + 1 && y == eY2 + 3))
+            {
+                erasePlayerBullet(x, y);
+                if (enemy2IsLive)
+                {
+                    increaseScore();
+                    healthEnemy2Damage(5);
+                }
+                removePlayerBulletsFromArray(i, "right");
+            }
+            else if ((x + 1 == eX3 && y == eY3) || (x + 1 == eX3 + 1 && y == eY3) || (x + 1 == eX3 + 2 && y == eY3) || (x + 1 == eX3 + 3 && y == eY3) || (x + 1 == eX3 && y == eY3 + 1) || (x + 1 == eX3 + 2 && y == eY3 + 1) || (x + 1 == eX3 + 3 && y == eY3 + 1) || (x + 1 == eX3 && y == eY3 + 2) || (x + 1 == eX3 + 3 && y == eY3 + 2) || (x + 1 == eX3 && y == eY3 + 3) || (x + 1 == eX3 + 3 && y == eY3 + 3) || (x + 1 == eX3 && y == eY3 + 4) || (x + 1 == eX3 + 3 && y == eY3 + 4))
+            {
+                erasePlayerBullet(x, y);
+                if (enemy3IsLive)
+                {
+                    increaseScore();
+                    healthEnemy3Damage(5);
+                }
+                removePlayerBulletsFromArray(i, "right");
+            }
+            else if (next != ' ')
+            {
+                erasePlayerBullet(x, y);
+                removePlayerBulletsFromArray(i, "right");
+            }
+        }
+    }
+
+    // for left hand side bullet
+    for (int i = 0; i < leftPlayerBulletCount; i++)
+    {
+        if (activatePlayerLeftBullet[i])
+        {
+            int x = playerLeftBulletX[i], y = playerLeftBulletY[i];
+            char next = getCharAtxy(x - 1, y);
+            if ((x - 1 == eX && y == eY) || (x - 1 == eX + 1 && y == eY) || (x - 1 == eX && y == eY + 1) || (x - 1 == eX + 4 && y == eY + 1) || (x - 1 == eX + 1 && y == eY + 2) || (x - 1 == eX + 2 && y == eY + 2) || (x - 1 == eX && y == eY + 3) || (x - 1 == eX + 1 && y == eY + 3) || (x - 1 == eX + 2 && y == eY + 3))
+            {
+                erasePlayerBullet(x, y);
+                if (enemy1IsLive)
+                {
+                    increaseScore();
+                    healthEnemy1Damage(5);
+                }
+                removePlayerBulletsFromArray(i, "left");
+            }
+            else if ((x - 1 == eX3 && y == eY3) || (x - 1 == eX3 + 3 && y == eY3) || (x - 1 == eX3 && y == eY3 + 1) || (x - 1 == eX3 + 3 && y == eY3 + 1) || (x - 1 == eX3 && y == eY3 + 2) || (x - 1 == eX3 + 3 && y == eY3 + 2) || (x - 1 == eX3 && y == eY3 + 3) || (x - 1 == eX3 + 3 && y == eY3 + 3))
+            {
+                erasePlayerBullet(x, y);
+                if (enemy3IsLive)
+                {
