@@ -1147,3 +1147,99 @@ void playerBulletCollision() // Remove the bullet in case of collision with the 
                 erasePlayerBullet(x, y);
                 if (enemy3IsLive)
                 {
+                    increaseScore();
+                    healthEnemy3Damage(5);
+                }
+                removePlayerBulletsFromArray(i, "left");
+            }
+
+            else if (next != ' ')
+            {
+                erasePlayerBullet(x, y);
+                removePlayerBulletsFromArray(i, "left");
+            }
+        }
+    }
+}
+
+void startPlayerBullet()
+{
+    for (int i = 0; i < 1000; i++)
+    {
+        activatePlayerRightBullet[i] = false;
+        activatePlayerLeftBullet[i] = false;
+    }
+}
+
+void removePlayerBulletsFromArray(int c, string direction) // makes bullet inactive
+{
+    // for right hand side bullet
+    if (direction == "right")
+    {
+        activatePlayerRightBullet[c] = false;
+    }
+
+    // for left hand side bullet
+    else if (direction == "left")
+    {
+        activatePlayerLeftBullet[c] = false;
+    }
+}
+
+void resetPlayerBullets() // removes inactive bullets from arrays
+{
+    // right side bullets
+    for (int i = 0; i < rightPlayerBulletCount; i++)
+    {
+        if (!activatePlayerRightBullet[i])
+        {
+            for (int j = i; j < rightPlayerBulletCount - 1; j++)
+            {
+                playerRightBulletX[j] = playerRightBulletX[j + 1];
+                playerRightBulletY[j] = playerRightBulletY[j + 1];
+                activatePlayerRightBullet[j] = activatePlayerRightBullet[j + 1];
+            }
+            rightPlayerBulletCount--;
+        }
+    }
+
+    // left side bullets
+    for (int i = 0; i < leftPlayerBulletCount; i++)
+    {
+        if (!activatePlayerLeftBullet[i])
+        {
+            for (int j = i; j < leftPlayerBulletCount - 1; j++)
+            {
+                playerLeftBulletX[j] = playerLeftBulletX[j + 1];
+                playerLeftBulletY[j] = playerLeftBulletY[j + 1];
+                activatePlayerLeftBullet[j] = activatePlayerLeftBullet[j + 1];
+            }
+            leftPlayerBulletCount--;
+        }
+    }
+}
+
+void playerHealth(int x, int y) // prints player health
+{
+    eraser(x, y);
+    gotoxy(x, y);
+    cout << "\33[32m"
+         << "PLAYER REMAINING HEALTH:  " << maxPlayerHealth << "\33[0m";
+}
+
+void playerHealthDamage(int damage, int x, int y) // calculates health of player after damage from enemies
+{
+    maxPlayerHealth -= damage;
+    playerHealth(x, y);
+}
+
+void healthEnemy1(int x, int y) // prints health of enemy 2
+{
+    eraser(x, y);
+    gotoxy(x, y);
+    cout << "\33[31m"
+         << "ENEMY 1 REMAINING HEALTH " << maxhealthEnemy1 << "\33[0m";
+}
+
+void healthEnemy1Damage(int damage) // calculates enemy 1 health after damage from player bullet
+{
