@@ -89,5 +89,6 @@ Dive into a simple yet engaging shooting experience:
 
 ## 🧑‍💻 Contributors  
 - **Developer:**  Yassin khoualdi     
-- Contributions, suggestions, and improvements are welcome!  
+- Contributions, suggestions, and improvements are welcome! 
+- For any query feel free to contact at officialyassinkhoualdi@gmail.com. 
 ---
