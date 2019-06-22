@@ -1243,3 +1243,99 @@ void healthEnemy1(int x, int y) // prints health of enemy 2
 
 void healthEnemy1Damage(int damage) // calculates enemy 1 health after damage from player bullet
 {
+    maxhealthEnemy1 -= damage;
+    if(maxhealthEnemy1<0)
+    {
+        maxhealthEnemy1=0;
+    }
+}
+
+void healthEnemy2(int x, int y) // prints enemy 2 health on header bar
+{
+    eraser(x, y);
+    gotoxy(x, y);
+    cout << "\33[31m"
+         << "ENEMY 2 REMAINING HEALTH: " << maxhealthEnemy2 << "\33[0m";
+}
+
+void healthEnemy2Damage(int damage) // calcualtes health of enemy after damage by player bullet
+{
+    maxhealthEnemy2 -= damage;
+    if(maxhealthEnemy2<0)
+    {
+        maxhealthEnemy2=0;
+    }
+}
+
+void healthEnemy3(int x, int y) // prints enemy 3 health on header bar
+{
+    eraser(x, y);
+    gotoxy(x, y);
+    cout << "\33[31m"
+         << "ENEMY 3 REMAINING HEALTH :" << maxhealthEnemy3 << "\33[0m";
+}
+
+void healthEnemy3Damage(int damage) // calcualtes health of enemy after damage by player bullet
+{
+    maxhealthEnemy3 -= damage;
+    if(maxhealthEnemy3<0)
+    {
+        maxhealthEnemy3=0;
+    }
+}
+
+void printScore() // prints score
+{
+    gotoxy(1, 5);
+    cout << "\33[32m"
+         << "SCORE :" << score;
+    cout << "\33[0m";
+}
+
+void displayHealthPill() // print health pill on header bar
+{
+    gotoxy(1, 7);
+    cout << "\33[5;32m"
+         << "HEALTH BOOSTER = "
+         << "\33[0m";
+    healthPill(19, 7);
+}
+
+void eraser(int x, int y) // erases the previous value of health and bullet count
+{
+    gotoxy(x, y);
+    cout << "                      ";
+}
+
+void printRemainingBullets() // displays bullet count
+{
+    eraser(1, 6);
+    gotoxy(1, 6);
+    cout << "\33[35m"
+         << "REMAINING BULLETS: " << playerBulletCount;
+    cout << "\33[0m";
+}
+
+void printmagazine() // print bullet crate on header bar
+{
+    gotoxy(1, 8);
+    cout << "\33[31m"
+         << "MAGAZINE = "
+         << "\33[0m";
+    magazine(14, 8);
+}
+
+void displayItems() // player, enemy, health and score bar
+{
+    header(57,3);
+    playerHealth(165, 4);
+    printScore();
+    printRemainingBullets();
+    printmagazine();
+    displayHealthPill();
+}
+void printPassingKey(int x, int y)
+{
+    gotoxy(x, y);
+    cout << "\33[5;31m" << PassingKey << PassingKey;
+    gotoxy(x, y + 1);
