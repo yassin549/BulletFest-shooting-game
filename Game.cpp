@@ -1339,3 +1339,99 @@ void printPassingKey(int x, int y)
     gotoxy(x, y);
     cout << "\33[5;31m" << PassingKey << PassingKey;
     gotoxy(x, y + 1);
+    cout << "\33[5;31m" << PassingKey << PassingKey;
+    cout << "\33[0m";
+}
+void erasePassingKey(int x, int y)
+{
+    gotoxy(x, y);
+    cout << "\33[5;31m"
+         << "  ";
+    gotoxy(x, y + 1);
+    cout << "\33[5;31m"
+         << "  ";
+    cout << "\33[0m";
+}
+void touchPassingKey(int x, int y)
+{
+        if ((x == PassingKeyX || x + 1 == PassingKeyX || x + 2 == PassingKeyX || x == PassingKeyX + 2 || x + 1 == PassingKeyX + 2 || x + 3 == PassingKeyX + 2) && (y == PassingKeyY || y + 1 == PassingKeyY || y + 2 == PassingKeyY))
+{
+            erasePassingKey(PassingKeyX, PassingKeyY);
+            LevelRunning = false;
+                gotoxy(70, 28);
+    char box=220;
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "\33[32m"<< box<< "\33[0m";
+    }
+    gotoxy(68, 27);
+    cout << "\33[32m" << "CONGRATULATIONS, LEVEL 2 PASSED!" << "\33[0m";
+    gotoxy(70, 25);
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "\33[32m" << box<< "\33[0m";
+    }
+    Sleep(3000);
+    menu();
+    
+    }
+    
+}
+
+void printLevel1(int x)
+{    
+    
+    gotoxy(1, 4);
+    cout << "\33[94m"
+         << "LEVEL: " << x << "\33[0m";
+}
+void rowsOfMaze(int x, int y) // first & last row of InnerMap
+{
+    
+    gotoxy(x, y);
+    for (int i = 0; i < 186; i++)
+    {
+        cout << "\33[31m"
+             << box
+             << "\33[0m";
+        x++;
+        gotoxy(x, y);
+    }
+}
+
+void columnsOfMaze(int x, int y) // Columns of InnerMap
+{
+ 
+    gotoxy(x, y);
+    cout << "\33[94m"
+         << box
+         << "\33[0m";
+    x++;
+    for (int i = 0; i < 184; i++)
+    {
+        gotoxy(x, y);
+        cout << " ";
+        x++;
+    }
+    gotoxy(x, y);
+    cout << "\33[94m"
+         << box
+         << "\33[0m";
+}
+
+void Maze() // Maze 
+{
+    int x = 1, y = 11;
+    rowsOfMaze(x, y);
+    y++;
+    for (int i = 0; i < 39; i++)
+    {
+        columnsOfMaze(x, y + i);//
+    }
+    rowsOfMaze(x, y + 39);
+}
+
+void InnerMapBoxes(int x, int y, int size) // InnerMapBoxess for InnerMaps(size bolay tou : number of blocks u wanna print)
+{
+    char box = 186;
+    for (int i = 0; i < size; i++)
