@@ -1435,3 +1435,99 @@ void InnerMapBoxes(int x, int y, int size) // InnerMapBoxess for InnerMaps(size 
 {
     char box = 186;
     for (int i = 0; i < size; i++)
+    {
+        gotoxy(x + i, y);
+        cout << "\33[34m" << box << "\33[0m";
+    }
+}
+
+void verticalInnerMapBoxes(int x, int y, int width, int height) // to print lambii line in the maze (width bolay tou: how many boxes to print horizontly)
+{
+    for (int i = 0; i < height; i++)
+    {
+        InnerMapBoxes(x, y + i, width);
+    }
+}
+
+void placeObjects() // to print magazine and health pills
+{
+    healthPill(healtPassingKeyX, healtPassingKeyY);
+    magazine(magazineX, magazineY);
+}
+
+void InnerMap() // printing InnerMap of the game(androoni khaddokhaal)
+{
+    placeObjects();//
+    // bottom line
+    InnerMapBoxes(75, 45, 18);
+    InnerMapBoxes(76, 45, 18);
+    InnerMapBoxes(77, 45, 18);// (x,y,width of box)
+    InnerMapBoxes(78, 45, 18);
+    // left side |____________|
+    InnerMapBoxes(23, 29, 34);
+    InnerMapBoxes(55, 29, 2);
+    InnerMapBoxes(55, 28, 2);
+    InnerMapBoxes(55, 27, 2);
+    InnerMapBoxes(55, 26, 2);
+    InnerMapBoxes(55, 25, 2);
+    InnerMapBoxes(55, 24, 2);
+    InnerMapBoxes(55, 23, 2);
+
+    //magazine walay
+    InnerMapBoxes(83, 18,  2);
+    InnerMapBoxes(83, 19,  2);
+    InnerMapBoxes(83, 20,  2);
+    InnerMapBoxes(83, 21, 12);
+
+    
+    // InnerMapBoxes(140, 29, 2);
+    InnerMapBoxes(140, 23, 2);
+    InnerMapBoxes(140, 24, 2);
+    InnerMapBoxes(140, 25, 2);
+    InnerMapBoxes(140, 27, 2);
+    InnerMapBoxes(140, 28, 2);
+    InnerMapBoxes(140, 29, 2);
+    InnerMapBoxes(140, 30, 2);
+    InnerMapBoxes(140, 31, 2);
+    InnerMapBoxes(140, 32, 2);
+    InnerMapBoxes(140, 33, 2);
+    InnerMapBoxes(140, 34, 2);
+    InnerMapBoxes(140, 35, 2);
+}
+
+void innerMap2() // printing InnerMap of the game
+{
+
+    placeObjects();
+    verticalInnerMapBoxes(24, 12, 2, 13);
+    InnerMapBoxes(24, 30, 34);
+    InnerMapBoxes(24, 28, 2);
+    InnerMapBoxes(24, 29, 2);
+    InnerMapBoxes(56, 29, 2);
+    InnerMapBoxes(56, 28, 2);
+    
+    InnerMapBoxes(70, 41, 27);
+    verticalInnerMapBoxes(70, 22, 2, 19);//x,y,width,hieght
+    verticalInnerMapBoxes(150, 12, 2, 30);
+    verticalInnerMapBoxes(100, 21, 2, 30);
+    InnerMapBoxes(48, 22, 22);
+    InnerMapBoxes(100, 20, 40);
+    InnerMapBoxes(152, 26, 16);
+}
+
+void healthPill(int x, int y) // printing health pill sprite
+{
+    gotoxy(x, y);
+    cout << "\33[5;31m" << heart << "\33[0m";
+}
+
+void erasehealthPill(int x, int y) // erases the health pill
+{
+    gotoxy(x, y);
+    cout << " ";
+}
+
+void magazine(int x, int y) // print magazine
+{
+    gotoxy(x, y);
+    cout << "\33[5;32m" << Magazine << "\33[0m";
