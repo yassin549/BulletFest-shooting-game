@@ -1531,3 +1531,67 @@ void magazine(int x, int y) // print magazine
 {
     gotoxy(x, y);
     cout << "\33[5;32m" << Magazine << "\33[0m";
+}
+
+void playerCollisionWithHealthPill(int x, int y) // determines whether player touches the health pill and resets player's health
+{
+    if ((x == healtPassingKeyX || x + 1 == healtPassingKeyX || x + 2 == healtPassingKeyY) && (y == healtPassingKeyY || y + 1 == healtPassingKeyY || y + 2 == healtPassingKeyY))
+    {
+        erasehealthPill(healtPassingKeyX, healtPassingKeyY);
+        maxPlayerHealth = 100;
+        playerHealth(165, 4);
+    }
+}
+
+void erasemagazine(int x, int y) // erases bullet crate
+{
+    gotoxy(x, y);
+    cout << " ";
+}
+
+void playerCollisionWithMagazine(int x, int y) // detects if player touches magazine and resets bullet count
+{
+    if ((x == magazineX || x + 1 == magazineX || x + 2 == magazineX || x == magazineX + 3 || x + 1 == magazineX + 3 || x + 2 == magazineX + 3) && (y == magazineY || y + 1 == magazineY || y + 2 == magazineY))
+    {
+        erasemagazine(magazineX, magazineY);
+        playerBulletCount = 200;
+        printRemainingBullets();
+    }
+}
+
+void checkItems(int x, int y) // checks whether player touches items in the InnerMap
+{
+    touchPassingKey( x, y);
+    playerCollisionWithHealthPill(x, y);
+    playerCollisionWithMagazine(x, y);
+}
+void endOfLevel(string text) // screen appears at the end of each level
+{
+    Sleep(1000);
+    gotoxy(70, 28);
+    char box=220;
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "\33[32m"<< box<< "\33[0m";
+    }
+    gotoxy(68, 27);
+    cout << "\33[32m" << text << "\33[0m";
+    gotoxy(70, 25);
+    for (int i = 0; i < 30; i++)
+    {
+        cout << "\33[32m" << box<< "\33[0m";
+    }
+    Sleep(3000);
+    levelNo2();
+    
+}
+
+void increaseScore() // increments score
+{
+    score++;
+    printScore();
+}
+
+void gotoxy(int x, int y)
+{
+    COORD coordinates;
