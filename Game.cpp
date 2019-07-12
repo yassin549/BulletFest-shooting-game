@@ -1595,3 +1595,90 @@ void increaseScore() // increments score
 void gotoxy(int x, int y)
 {
     COORD coordinates;
+    coordinates.X = x;
+    coordinates.Y = y;
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coordinates);
+}
+
+char getCharAtxy(short int x, short int y)
+{
+    CHAR_INFO ci;
+    COORD xy = {0, 0};
+    SMALL_RECT rect = {x, y, x, y};
+    COORD coordBufSize;
+    coordBufSize.X = 1;
+    coordBufSize.Y = 1;
+    return ReadConsoleOutput(GetStdHandle(STD_OUTPUT_HANDLE), &ci, coordBufSize, xy, &rect) ? ci.Char.AsciiChar : ' ';
+}
+void menu() // prints main starting menu
+{
+    system("cls");
+    int x = 60, y = 8;
+    header(x, y);
+    cout << "\33[1;3;96m";
+    cout << "\n\n\n\n\n\t\t\t\t\t\t\t\t+==============================================+" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|    "<< "        >  PRESS 1 TO START GAME        "<< "  |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|    "<< "        >  PRESS 2 TO EXIT            "<< "    |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t|                                              |" << endl;
+    cout << "\33[1;3;96m";
+    cout << "\t\t\t\t\t\t\t\t+==============================================+" << endl;
+    cout << "\33[1;3;32m";
+    gotoxy(58,33);
+    {
+    char opt=getch();
+    if (opt == '1')
+    {
+        levelNo1();
+    }
+    else if (opt == '2')
+    {
+        system("cls");
+        exit(0);
+    }
+    else
+    menu();
+    }
+}
+void header(int x, int y) // header of game on main starting screen
+{
+
+    gotoxy(x, y);
+    cout << "\33[1;91m";
+    cout << " ______        _ _              _______              " << endl;
+    gotoxy(x, y+1);
+     cout << "\33[1;92m";
+    cout << "(____  \\      | | |      _     (_______)        _    " <<endl;
+    gotoxy(x, y+2);
+     cout << "\33[1;93m";
+    cout << " ____)  )_   _| | | ____| |_    _____ ____  ___| |_  " << endl;
+    gotoxy(x, y+3);
+     cout << "\33[1;94m";
+    cout << "|  __  (| | | | | |/ _  )  _)  |  ___) _  )/___)  _) " << endl;
+    gotoxy(x, y+4);
+     cout << "\33[1;95m";
+    cout << "| |__)  ) |_| | | ( (/ /| |__  | |  ( (/ /|___ | |__ " << endl;
+    gotoxy(x, y+5);
+     cout << "\33[1;96m";
+    cout << "|______/ \\____|_|_|\\____)\\___) )_|   \\____|___/ \\___)"<<endl;
+    cout << "\33[1;0m";
+
+
+}
+
