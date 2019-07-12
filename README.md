@@ -1,6 +1,3 @@
-Here's an enhanced and polished version of your README:
-
----
 
 # BULLETFEST GAME 🎯  
 **A Thrilling Console-Based Shooting Adventure**
